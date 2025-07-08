@@ -18,8 +18,8 @@ A simple **HTML + JavaScript** project to capture the user’s GPS location and 
 ## ✅ Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/gps-to-telegram.git
-cd gps-to-telegram
+git clone https://github.com/localhostvicky/GPS_Tracking
+cd GPS_Tracking
 ```
 
 ---
